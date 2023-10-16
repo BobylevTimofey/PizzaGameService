@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{29D0B709-72AD-40AB-9A9A-C7B4F2E04E76}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaGameService.Api", "src\PizzaGameService.Api\PizzaGameService.Api.csproj", "{27CEEA2F-501C-4A4D-BCAE-F0EC0A6D21DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaGameService.Data", "src\PizzaGameService.Data\PizzaGameService.Data.csproj", "{3C73C22C-863D-4CF3-A74E-C2F14927B508}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{27CEEA2F-501C-4A4D-BCAE-F0EC0A6D21DD} = {29D0B709-72AD-40AB-9A9A-C7B4F2E04E76}
+		{3C73C22C-863D-4CF3-A74E-C2F14927B508} = {29D0B709-72AD-40AB-9A9A-C7B4F2E04E76}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{27CEEA2F-501C-4A4D-BCAE-F0EC0A6D21DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27CEEA2F-501C-4A4D-BCAE-F0EC0A6D21DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27CEEA2F-501C-4A4D-BCAE-F0EC0A6D21DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27CEEA2F-501C-4A4D-BCAE-F0EC0A6D21DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C73C22C-863D-4CF3-A74E-C2F14927B508}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C73C22C-863D-4CF3-A74E-C2F14927B508}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C73C22C-863D-4CF3-A74E-C2F14927B508}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C73C22C-863D-4CF3-A74E-C2F14927B508}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
