@@ -6,6 +6,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaGameService.Api", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaGameService.Data", "src\PizzaGameService.Data\PizzaGameService.Data.csproj", "{3C73C22C-863D-4CF3-A74E-C2F14927B508}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaGameService.Service", "PizzaGameService.Service\PizzaGameService.Service.csproj", "{5FC59613-8931-4EE6-82C5-74CD43BCD381}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{1F2C4427-C8E8-4015-A32F-B813591B3FD3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaGameService.Tests", "PizzaGameService.Tests\PizzaGameService.Tests.csproj", "{854EB9DA-45A3-4041-B022-3F22A7FBE0B9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -14,6 +20,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{27CEEA2F-501C-4A4D-BCAE-F0EC0A6D21DD} = {29D0B709-72AD-40AB-9A9A-C7B4F2E04E76}
 		{3C73C22C-863D-4CF3-A74E-C2F14927B508} = {29D0B709-72AD-40AB-9A9A-C7B4F2E04E76}
+		{5FC59613-8931-4EE6-82C5-74CD43BCD381} = {29D0B709-72AD-40AB-9A9A-C7B4F2E04E76}
+		{854EB9DA-45A3-4041-B022-3F22A7FBE0B9} = {1F2C4427-C8E8-4015-A32F-B813591B3FD3}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{27CEEA2F-501C-4A4D-BCAE-F0EC0A6D21DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -24,5 +32,13 @@ Global
 		{3C73C22C-863D-4CF3-A74E-C2F14927B508}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C73C22C-863D-4CF3-A74E-C2F14927B508}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C73C22C-863D-4CF3-A74E-C2F14927B508}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FC59613-8931-4EE6-82C5-74CD43BCD381}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FC59613-8931-4EE6-82C5-74CD43BCD381}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FC59613-8931-4EE6-82C5-74CD43BCD381}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FC59613-8931-4EE6-82C5-74CD43BCD381}.Release|Any CPU.Build.0 = Release|Any CPU
+		{854EB9DA-45A3-4041-B022-3F22A7FBE0B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{854EB9DA-45A3-4041-B022-3F22A7FBE0B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{854EB9DA-45A3-4041-B022-3F22A7FBE0B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{854EB9DA-45A3-4041-B022-3F22A7FBE0B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
