@@ -14,6 +14,4 @@ public record PlayerRegistrationRequest
     [JsonPropertyName("age")] public int? PlayerAge { get; init; }
 
     [JsonPropertyName("gender")] public Gender? PlayerGender { get; init; }
-
-    [JsonPropertyName("rating")] public int? PlayerRating { get; init; } = 0;
 }

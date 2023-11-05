@@ -11,7 +11,8 @@ public class PlayerAuthorizationService : IPlayerAuthorizationService
     private readonly IPlayerRepository _playerRepository;
     private readonly IPlayerActiveRepository _playerActiveRepository;
 
-    public PlayerAuthorizationService(IPlayerRepository playerRepository, IPlayerActiveRepository playerActiveRepository)
+    public PlayerAuthorizationService(IPlayerRepository playerRepository,
+        IPlayerActiveRepository playerActiveRepository)
     {
         _playerRepository = playerRepository;
         _playerActiveRepository = playerActiveRepository;
@@ -29,16 +30,16 @@ public class PlayerAuthorizationService : IPlayerAuthorizationService
         {
             throw new PlayerNotVerifyException("Incorrect login or password");
         }
-        
-        if(registeredPlayer.IsPlaying)
+
+        if (registeredPlayer.IsPlaying)
         {
             throw new PlayerAlreadyPlayingException("Player already playing");
         }
 
         var playerId = registeredPlayer.Id;
-        
+
         await _playerActiveRepository.SetPlayerActive(playerId);
-        
+
         return playerId;
     }
 
@@ -62,7 +63,6 @@ public class PlayerAuthorizationService : IPlayerAuthorizationService
             PlayerEmail = player.PlayerEmail,
             PlayerGender = player.PlayerGender,
             PlayerAge = player.PlayerAge,
-            PlayerRating = player.PlayerRating
         };
         var idPlayer = await _playerRepository.SetPlayer(newPlayer);
 
