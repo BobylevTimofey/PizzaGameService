@@ -1,4 +1,5 @@
 using PizzaGameService.Data.Extensions;
+using PizzaGameService.Data.Settings;
 using PizzaGameService.Service.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +9,9 @@ builder.Services.AddEndpointsApiExplorer()
     .AddSwaggerGen()
     .AddData()
     .AddDomain();
+
+builder.Services.Configure<ConnectionStringSettings>(
+    builder.Configuration.GetSection(nameof(ConnectionStringSettings)));
 
 var app = builder.Build();
 

@@ -23,9 +23,9 @@ public class PlayerRepositoryMock : IPlayerRepository, IPlayerActiveRepository
         var result = _data.Select(player => new RegisteredPlayer
         {
             Id = player.Item1,
-            PlayerLogin = player.Item2.PlayerLogin,
-            PlayerPassword = player.Item2.PlayerPassword,
-            PlayerEmail = player.Item2.PlayerEmail,
+            Login = player.Item2.Login,
+            Password = player.Item2.Password,
+            Email = player.Item2.Email,
             IsPlaying = player.Item3
         }).ToList();
 
@@ -34,23 +34,23 @@ public class PlayerRepositoryMock : IPlayerRepository, IPlayerActiveRepository
 
     public Task SetPlayerActive(int id)
     {
-        var a =_data.FirstOrDefault(player => player.Item1 == id);
-        
+        var a = _data.FirstOrDefault(player => player.Item1 == id);
+
         _data.Remove(a);
         a.Item3 = true;
         _data.Add(a);
-        
+
         return Task.CompletedTask;
     }
 
     public Task SetPlayerInactive(int id)
     {
-        var a =_data.FirstOrDefault(player => player.Item1 == id);
-        
+        var a = _data.FirstOrDefault(player => player.Item1 == id);
+
         _data.Remove(a);
         a.Item3 = false;
         _data.Add(a);
-        
+
         return Task.CompletedTask;
     }
 }

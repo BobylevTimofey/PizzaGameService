@@ -4,13 +4,13 @@ namespace PizzaGameService.Data.PlayerData.Models;
 
 public record PlayerSetParameters
 {
-    [JsonPropertyName("login")] public required string PlayerLogin { get; init; }
+    [JsonPropertyName("login")] public required string Login { get; init; }
 
-    [JsonPropertyName("password")] public required string PlayerPassword { get; set; }
+    [JsonPropertyName("password")] public required string Password { get; set; }
 
-    [JsonPropertyName("email")] public required string PlayerEmail { get; init; }
+    [JsonPropertyName("email")] public required string Email { get; init; }
 
-    [JsonPropertyName("age")] public int? PlayerAge { get; init; }
+    [JsonPropertyName("age")] public int? Age { get; init; }
 
-    [JsonPropertyName("gender")] public Gender? PlayerGender { get; init; }
+    [JsonPropertyName("gender")] public Gender? Gender { get; init; }
 }
