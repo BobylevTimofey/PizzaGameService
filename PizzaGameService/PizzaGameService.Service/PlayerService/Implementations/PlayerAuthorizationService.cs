@@ -47,7 +47,7 @@ public class PlayerAuthorizationService : IPlayerAuthorizationService
     {
         var players = await _playerRepository.GetAllPlayers();
 
-        if (players.Any(registeredPlayer => registeredPlayer.Login == player.PlayerLogin &&
+        if (players.Any(registeredPlayer => registeredPlayer.Login == player.PlayerLogin ||
                                             registeredPlayer.Email == player.PlayerEmail))
         {
             throw new PlayerAlreadyRegisteredException(

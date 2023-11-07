@@ -23,9 +23,11 @@ public class PlayerRepository : IPlayerRepository
 
         const int baseRating = 0;
 
+        const bool defaultIsPlaying = false;
+
         var sqlCommand =
-            "INSERT INTO players (login, password, email, age, gender, rating) " +
-            $"VALUES (@Login, @Password, @Email, @Age, @Gender, {baseRating}) RETURNING id";
+            "INSERT INTO players (login, password, email, is_playing, age, gender, rating) " +
+            $"VALUES (@Login, @Password, @Email, {defaultIsPlaying}, @Age, @Gender, {baseRating}) RETURNING id";
 
         var idPlayers = await connection.QueryAsync<int>(sqlCommand, player);
 

@@ -1,4 +1,6 @@
+using Dapper.FluentMap;
 using PizzaGameService.Data.Extensions;
+using PizzaGameService.Data.Mappers;
 using PizzaGameService.Data.Settings;
 using PizzaGameService.Service.Extensions;
 
@@ -20,6 +22,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+FluentMapper.Initialize(config => { config.AddMap(app.Services.GetRequiredService<RegisteredPlayerMapper>()); });
 
 app.UseHttpsRedirection();
 
