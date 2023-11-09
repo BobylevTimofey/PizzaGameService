@@ -9,9 +9,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\PizzaGameService.Service\PizzaGameService.Service.csproj" />
       <ProjectReference Include="..\src\PizzaGameService.Api\PizzaGameService.Api.csproj" />
       <ProjectReference Include="..\src\PizzaGameService.Data\PizzaGameService.Data.csproj" />
+      <ProjectReference Include="..\src\PizzaGameService.Service\PizzaGameService.Service.csproj" />
     </ItemGroup>
 
     <ItemGroup>

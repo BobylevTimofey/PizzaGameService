@@ -12,7 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\PizzaGameService.Service\PizzaGameService.Service.csproj" />
+      <ProjectReference Include="..\PizzaGameService.Service\PizzaGameService.Service.csproj" />
     </ItemGroup>
 
 </Project>
