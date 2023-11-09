@@ -23,8 +23,8 @@ public class PlayerAuthorizationService : IPlayerAuthorizationService
         var players = await _playerRepository.GetAllPlayers();
 
         var registeredPlayer = players.FirstOrDefault(registeredPlayer =>
-            registeredPlayer.Login == player.PlayerLogin &&
-            BCrypt.Net.BCrypt.Verify(player.PlayerPassword, registeredPlayer.Password));
+            registeredPlayer.Login == player.Login &&
+            BCrypt.Net.BCrypt.Verify(player.Password, registeredPlayer.Password));
 
         if (registeredPlayer is null)
         {
@@ -47,22 +47,22 @@ public class PlayerAuthorizationService : IPlayerAuthorizationService
     {
         var players = await _playerRepository.GetAllPlayers();
 
-        if (players.Any(registeredPlayer => registeredPlayer.Login == player.PlayerLogin ||
-                                            registeredPlayer.Email == player.PlayerEmail))
+        if (players.Any(registeredPlayer => registeredPlayer.Login == player.Login ||
+                                            registeredPlayer.Email == player.Email))
         {
             throw new PlayerAlreadyRegisteredException(
-                $"Player with login: {player.PlayerLogin} email: {player.PlayerEmail} already registered");
+                $"Player with login: {player.Login} email: {player.Email} already registered");
         }
 
-        var playerPassword = BCrypt.Net.BCrypt.HashPassword(player.PlayerPassword);
+        var playerPassword = BCrypt.Net.BCrypt.HashPassword(player.Password);
 
         var newPlayer = new PlayerSetParameters
         {
-            Login = player.PlayerLogin,
+            Login = player.Login,
             Password = playerPassword,
-            Email = player.PlayerEmail,
-            Gender = player.PlayerGender,
-            Age = player.PlayerAge
+            Email = player.Email,
+            Gender = player.Gender,
+            Age = player.Age
         };
         var idPlayer = await _playerRepository.SetPlayer(newPlayer);
 
