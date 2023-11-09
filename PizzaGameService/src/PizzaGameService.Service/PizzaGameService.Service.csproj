@@ -11,10 +11,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="RatingService\Implementations\"/>
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\PizzaGameService.Data\PizzaGameService.Data.csproj" />
     </ItemGroup>
 

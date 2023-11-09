@@ -9,18 +9,18 @@ namespace PizzaGameService.Api.Controllers.RatingController;
 [ApiController]
 public class LeaderboardController : ControllerBase
 {
-    private readonly IRatingService _ratingService;
+    private readonly IRatingsService _ratingsService;
 
-    public LeaderboardController(IRatingService ratingService)
+    public LeaderboardController(IRatingsService ratingsService)
     {
-        _ratingService = ratingService;
+        _ratingsService = ratingsService;
     }
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<IReadOnlyList<PlayerRatingResponse>>> GetLeaderboard()
     {
-        var leaderboard = await _ratingService.GetLeaderboard();
+        var leaderboard = await _ratingsService.GetLeaderboard();
 
         return Ok(leaderboard);
     }
@@ -33,7 +33,7 @@ public class LeaderboardController : ControllerBase
     {
         try
         {
-            var playerRating = await _ratingService.GetPlayerRating(idPlayer);
+            var playerRating = await _ratingsService.GetPlayerRating(idPlayer);
 
             return Ok(playerRating);
         }

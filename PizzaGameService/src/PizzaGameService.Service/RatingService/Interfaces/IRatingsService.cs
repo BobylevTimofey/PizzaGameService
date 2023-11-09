@@ -2,7 +2,7 @@
 
 namespace PizzaGameService.Service.RatingService.Interfaces;
 
-public interface IRatingService
+public interface IRatingsService
 {
     Task<IReadOnlyList<PlayerRatingResponse>> GetLeaderboard();
 
