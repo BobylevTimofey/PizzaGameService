@@ -23,8 +23,8 @@ public class PlayerAuthorizationService : IPlayerAuthorizationService
         var players = await _playerRepository.GetAllPlayers();
 
         var registeredPlayer = players.FirstOrDefault(registeredPlayer =>
-            registeredPlayer.PlayerLogin == player.PlayerLogin &&
-            BCrypt.Net.BCrypt.Verify(player.PlayerPassword, registeredPlayer.PlayerPassword));
+            registeredPlayer.Login == player.PlayerLogin &&
+            BCrypt.Net.BCrypt.Verify(player.PlayerPassword, registeredPlayer.Password));
 
         if (registeredPlayer is null)
         {
@@ -38,7 +38,7 @@ public class PlayerAuthorizationService : IPlayerAuthorizationService
 
         var playerId = registeredPlayer.Id;
 
-        await _playerActiveRepository.SetPlayerActive(playerId);
+        /*await _playerActiveRepository.SetPlayerActive(playerId);*/
 
         return playerId;
     }
@@ -47,8 +47,8 @@ public class PlayerAuthorizationService : IPlayerAuthorizationService
     {
         var players = await _playerRepository.GetAllPlayers();
 
-        if (players.Any(registeredPlayer => registeredPlayer.PlayerLogin == player.PlayerLogin &&
-                                            registeredPlayer.PlayerEmail == player.PlayerEmail))
+        if (players.Any(registeredPlayer => registeredPlayer.Login == player.PlayerLogin ||
+                                            registeredPlayer.Email == player.PlayerEmail))
         {
             throw new PlayerAlreadyRegisteredException(
                 $"Player with login: {player.PlayerLogin} email: {player.PlayerEmail} already registered");
@@ -58,11 +58,11 @@ public class PlayerAuthorizationService : IPlayerAuthorizationService
 
         var newPlayer = new PlayerSetParameters
         {
-            PlayerLogin = player.PlayerLogin,
-            PlayerPassword = playerPassword,
-            PlayerEmail = player.PlayerEmail,
-            PlayerGender = player.PlayerGender,
-            PlayerAge = player.PlayerAge,
+            Login = player.PlayerLogin,
+            Password = playerPassword,
+            Email = player.PlayerEmail,
+            Gender = player.PlayerGender,
+            Age = player.PlayerAge
         };
         var idPlayer = await _playerRepository.SetPlayer(newPlayer);
 

@@ -1,16 +1,14 @@
-﻿using System.Text.Json.Serialization;
-
-namespace PizzaGameService.Data.PlayerData.Models;
+﻿namespace PizzaGameService.Data.PlayerData.Models;
 
 public record PlayerSetParameters
 {
-    [JsonPropertyName("login")] public required string PlayerLogin { get; init; }
+    public required string Login { get; init; }
 
-    [JsonPropertyName("password")] public required string PlayerPassword { get; set; }
+    public required string Password { get; set; }
 
-    [JsonPropertyName("email")] public required string PlayerEmail { get; init; }
+    public required string Email { get; init; }
 
-    [JsonPropertyName("age")] public int? PlayerAge { get; init; }
+    public int? Age { get; init; }
 
-    [JsonPropertyName("gender")] public Gender? PlayerGender { get; init; }
+    public Gender? Gender { get; init; }
 }
