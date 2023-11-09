@@ -5,13 +5,13 @@ namespace PizzaGameService.Service.PlayerService.Requests;
 
 public record PlayerRegistrationRequest
 {
-    [JsonPropertyName("login")] public required string PlayerLogin { get; init; }
+    [JsonPropertyName("login")] public required string Login { get; init; }
 
-    [JsonPropertyName("password")] public required string PlayerPassword { get; init; }
+    [JsonPropertyName("password")] public required string Password { get; init; }
 
-    [JsonPropertyName("email")] public required string PlayerEmail { get; init; }
+    [JsonPropertyName("email")] public required string Email { get; init; }
 
-    [JsonPropertyName("age")] public int? PlayerAge { get; init; }
+    [JsonPropertyName("age")] public int? Age { get; init; }
 
-    [JsonPropertyName("gender")] public Gender? PlayerGender { get; init; }
+    [JsonPropertyName("gender")] public Gender? Gender { get; init; }
 }

@@ -22,18 +22,16 @@ public class PlayerController : ControllerBase
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<ActionResult<int>> RegisterPlayer(PlayerRegistrationRequest request)
     {
-        int idPlayer;
-
         try
         {
-            idPlayer = await _authorizationService.SignUp(request);
+            var idPlayer = await _authorizationService.SignUp(request);
+
+            return Created(string.Empty, idPlayer);
         }
         catch (PlayerAlreadyRegisteredException exception)
         {
             return Conflict(exception.Message);
         }
-
-        return Created(string.Empty, idPlayer);
     }
 
     [HttpPost]
@@ -43,11 +41,11 @@ public class PlayerController : ControllerBase
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<ActionResult<int>> AuthorizePlayer(PlayerAuthorizationRequest request)
     {
-        int idPlayer;
-
         try
         {
-            idPlayer = await _authorizationService.SingIn(request);
+            var idPlayer = await _authorizationService.SingIn(request);
+
+            return Ok(idPlayer);
         }
         catch (PlayerNotVerifyException exception)
         {
@@ -57,7 +55,5 @@ public class PlayerController : ControllerBase
         {
             return Conflict(exception.Message);
         }
-
-        return Ok(idPlayer);
     }
 }
