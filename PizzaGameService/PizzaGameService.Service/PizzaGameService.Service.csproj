@@ -14,4 +14,8 @@
       <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
       <PackageReference Include="HostBuilder.Extensions" Version="1.2.0" />
     </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="RatingService\Implementations\"/>
+    </ItemGroup>
 </Project>

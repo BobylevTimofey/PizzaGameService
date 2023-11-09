@@ -1,6 +1,4 @@
 ﻿using FluentAssertions;
-using Microsoft.Extensions.DependencyInjection;
-using PizzaGameService.Data.PlayerData.Interfaces;
 using PizzaGameService.Service.Exceptions;
 using PizzaGameService.Service.PlayerService.Implementations;
 using PizzaGameService.Service.PlayerService.Interfaces;
@@ -15,22 +13,22 @@ public class PlayerServiceTests
 
     private static readonly PlayerAuthorizationRequest DefaultAuthorizationRequest = new()
     {
-        PlayerLogin = "test",
-        PlayerPassword = "test",
+        Login = "test",
+        Password = "test"
     };
 
     private static readonly PlayerRegistrationRequest DefaultRegistrationRequest = new()
     {
-        PlayerLogin = "test",
-        PlayerPassword = "test",
-        PlayerEmail = "test",
+        Login = "test",
+        Password = "test",
+        Email = "test"
     };
 
     [SetUp]
     public void SetUp()
     {
         var testRepository = new PlayerRepositoryMock();
-        
+
         _authorizationService = new PlayerAuthorizationService(testRepository, testRepository);
     }
 
@@ -61,27 +59,27 @@ public class PlayerServiceTests
 
         actualId.Should().Be(expectedId);
     }
-    
+
     [Test]
     public async Task PlayerWithIncorrectLoginTest()
     {
-        await _authorizationService.SignUp(DefaultRegistrationRequest with{PlayerLogin = "test2"});
+        await _authorizationService.SignUp(DefaultRegistrationRequest with { Login = "test2" });
 
         Func<Task<int>> act = async () => await _authorizationService.SingIn(DefaultAuthorizationRequest);
 
         await act.Should().ThrowAsync<PlayerNotVerifyException>();
     }
-    
+
     [Test]
     public async Task PlayerWithIncorrectPasswordTest()
     {
-        await _authorizationService.SignUp(DefaultRegistrationRequest with{PlayerPassword = "test2"});
+        await _authorizationService.SignUp(DefaultRegistrationRequest with { Password = "test2" });
 
         Func<Task<int>> act = async () => await _authorizationService.SingIn(DefaultAuthorizationRequest);
 
         await act.Should().ThrowAsync<PlayerNotVerifyException>();
     }
-    
+
     [Test]
     public async Task PlayerAlreadyPlayingTest()
     {

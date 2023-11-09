@@ -11,7 +11,8 @@ public class PlayerAuthorizationService : IPlayerAuthorizationService
     private readonly IPlayerRepository _playerRepository;
     private readonly IPlayerActiveRepository _playerActiveRepository;
 
-    public PlayerAuthorizationService(IPlayerRepository playerRepository, IPlayerActiveRepository playerActiveRepository)
+    public PlayerAuthorizationService(IPlayerRepository playerRepository,
+        IPlayerActiveRepository playerActiveRepository)
     {
         _playerRepository = playerRepository;
         _playerActiveRepository = playerActiveRepository;
@@ -22,23 +23,23 @@ public class PlayerAuthorizationService : IPlayerAuthorizationService
         var players = await _playerRepository.GetAllPlayers();
 
         var registeredPlayer = players.FirstOrDefault(registeredPlayer =>
-            registeredPlayer.PlayerLogin == player.PlayerLogin &&
-            BCrypt.Net.BCrypt.Verify(player.PlayerPassword, registeredPlayer.PlayerPassword));
+            registeredPlayer.Login == player.Login &&
+            BCrypt.Net.BCrypt.Verify(player.Password, registeredPlayer.Password));
 
         if (registeredPlayer is null)
         {
             throw new PlayerNotVerifyException("Incorrect login or password");
         }
-        
-        if(registeredPlayer.IsPlaying)
+
+        if (registeredPlayer.IsPlaying)
         {
             throw new PlayerAlreadyPlayingException("Player already playing");
         }
 
         var playerId = registeredPlayer.Id;
-        
-        await _playerActiveRepository.SetPlayerActive(playerId);
-        
+
+        /*await _playerActiveRepository.SetPlayerActive(playerId);*/
+
         return playerId;
     }
 
@@ -46,23 +47,22 @@ public class PlayerAuthorizationService : IPlayerAuthorizationService
     {
         var players = await _playerRepository.GetAllPlayers();
 
-        if (players.Any(registeredPlayer => registeredPlayer.PlayerLogin == player.PlayerLogin &&
-                                            registeredPlayer.PlayerEmail == player.PlayerEmail))
+        if (players.Any(registeredPlayer => registeredPlayer.Login == player.Login ||
+                                            registeredPlayer.Email == player.Email))
         {
             throw new PlayerAlreadyRegisteredException(
-                $"Player with login: {player.PlayerLogin} email: {player.PlayerEmail} already registered");
+                $"Player with login: {player.Login} email: {player.Email} already registered");
         }
 
-        var playerPassword = BCrypt.Net.BCrypt.HashPassword(player.PlayerPassword);
+        var playerPassword = BCrypt.Net.BCrypt.HashPassword(player.Password);
 
         var newPlayer = new PlayerSetParameters
         {
-            PlayerLogin = player.PlayerLogin,
-            PlayerPassword = playerPassword,
-            PlayerEmail = player.PlayerEmail,
-            PlayerGender = player.PlayerGender,
-            PlayerAge = player.PlayerAge,
-            PlayerRating = player.PlayerRating
+            Login = player.Login,
+            Password = playerPassword,
+            Email = player.Email,
+            Gender = player.Gender,
+            Age = player.Age
         };
         var idPlayer = await _playerRepository.SetPlayer(newPlayer);
 
