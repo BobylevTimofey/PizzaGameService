@@ -34,6 +34,11 @@ public class PlayerRepository : IPlayerRepository
         return idPlayers.FirstOrDefault();
     }
 
+    public Task<Player> GetPlayer(int idPlayer)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<IReadOnlyList<RegisteredPlayer>> GetAllPlayers()
     {
         using IDbConnection connection = new NpgsqlConnection(_connectionString);

@@ -18,6 +18,11 @@ public class PlayerRepositoryMock : IPlayerRepository, IPlayerActiveRepository
         return Task.FromResult(newId);
     }
 
+    public Task<Player> GetPlayer(int idPlayer)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<IReadOnlyList<RegisteredPlayer>> GetAllPlayers()
     {
         var result = _data.Select(player => new RegisteredPlayer
