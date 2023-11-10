@@ -1,53 +1,31 @@
-﻿using PizzaGameService.Data.PlayerData.Interfaces;
-using PizzaGameService.Data.PlayersRating.Interfaces;
+﻿using PizzaGameService.Data.PlayersRating.Interfaces;
+using PizzaGameService.Data.PlayersRating.Models;
+using PizzaGameService.Service.Exceptions;
 using PizzaGameService.Service.RatingService.Interfaces;
-using PizzaGameService.Service.RatingService.Responses;
 
 namespace PizzaGameService.Service.RatingService.Implementations;
 
 public class RatingsService : IRatingsService
 {
     private readonly IPlayersRatingRepository _ratingRepository;
-    private readonly IPlayerRepository _playerRepository;
 
-    public RatingsService(IPlayersRatingRepository ratingRepository, IPlayerRepository playerRepository)
+    public RatingsService(IPlayersRatingRepository ratingRepository)
     {
         _ratingRepository = ratingRepository;
-        _playerRepository = playerRepository;
     }
 
-    public async Task<IReadOnlyList<PlayerRatingResponse>> GetLeaderboard()
+    public async Task<IReadOnlyList<PlayerLeaderboardResponse>> GetLeaderboard(int countPlayers)
     {
-        var leaderboard = new List<PlayerRatingResponse>();
-        var topPlayers = await _ratingRepository.GetTopPlayers();
-
-        for (int i = 1; i <= topPlayers.Count; i++)
-        {
-            var playerInLeaderboard = new PlayerRatingResponse
-            {
-                PlaceInTop = i,
-                Login = topPlayers[i].Login,
-                Rating = topPlayers[i].Rating
-            };
-
-            leaderboard.Add(playerInLeaderboard);
-        }
+        var leaderboard = await _ratingRepository.GetTopPlayers(countPlayers);
 
         return leaderboard;
     }
 
-    public async Task<PlayerRatingResponse> GetPlayerRating(int idPlayer)
+    public async Task<PlayerLeaderboardResponse> GetPlayerRating(int idPlayer)
     {
-        var player = await _playerRepository.GetPlayer(idPlayer);
-        var playerPlaceInTop = await _ratingRepository.GetPlayerPlaceInTop(idPlayer);
+        var playerPlaceInTop = await _ratingRepository.GetPlayerPlaceInTop(idPlayer) ??
+                               throw new PlayerNotFoundException(idPlayer);
 
-        var playerInLeaderboard = new PlayerRatingResponse
-        {
-            PlaceInTop = playerPlaceInTop,
-            Login = player.Login,
-            Rating = player.Rating
-        };
-
-        return playerInLeaderboard;
+        return playerPlaceInTop;
     }
 }

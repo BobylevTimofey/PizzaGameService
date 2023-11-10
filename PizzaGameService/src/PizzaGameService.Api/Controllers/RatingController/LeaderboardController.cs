@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PizzaGameService.Data.PlayersRating.Models;
 using PizzaGameService.Service.Exceptions;
 using PizzaGameService.Service.RatingService.Interfaces;
-using PizzaGameService.Service.RatingService.Responses;
 
 namespace PizzaGameService.Api.Controllers.RatingController;
 
@@ -18,9 +18,10 @@ public class LeaderboardController : ControllerBase
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<IReadOnlyList<PlayerRatingResponse>>> GetLeaderboard()
+    public async Task<ActionResult<IReadOnlyList<PlayerLeaderboardResponse>>> GetLeaderboard(
+        [FromQuery] int countPlayers)
     {
-        var leaderboard = await _ratingsService.GetLeaderboard();
+        var leaderboard = await _ratingsService.GetLeaderboard(countPlayers);
 
         return Ok(leaderboard);
     }
@@ -29,7 +30,7 @@ public class LeaderboardController : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<PlayerRatingResponse>> GetPlayerRating(int idPlayer)
+    public async Task<ActionResult<PlayerLeaderboardResponse>> GetPlayerRating(int idPlayer)
     {
         try
         {
