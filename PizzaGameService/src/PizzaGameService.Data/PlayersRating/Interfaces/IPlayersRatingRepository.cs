@@ -4,7 +4,7 @@ namespace PizzaGameService.Data.PlayersRating.Interfaces;
 
 public interface IPlayersRatingRepository
 {
-    Task<IReadOnlyList<PlayerRating>> GetTopPlayers();
+    Task<IReadOnlyList<PlayerLeaderboardResponse>> GetTopPlayers(int countPlayers);
 
-    Task<int> GetPlayerPlaceInTop(int idPlayer);
+    Task<PlayerLeaderboardResponse?> GetPlayerPlaceInTop(int idPlayer);
 }

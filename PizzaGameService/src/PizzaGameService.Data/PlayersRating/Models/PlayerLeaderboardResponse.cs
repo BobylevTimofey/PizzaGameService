@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace PizzaGameService.Service.RatingService.Responses;
+namespace PizzaGameService.Data.PlayersRating.Models;
 
-public record PlayerRatingResponse
+public class PlayerLeaderboardResponse
 {
     [JsonPropertyName("placeInTop")] public required int PlaceInTop { get; init; }
 
