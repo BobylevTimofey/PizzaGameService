@@ -3,6 +3,8 @@ using PizzaGameService.Data.PlayerData.Implementations;
 using PizzaGameService.Data.PlayerData.Interfaces;
 using PizzaGameService.Data.PlayersRating.Implementations;
 using PizzaGameService.Data.PlayersRating.Interfaces;
+using PizzaGameService.Data.PlayerToken.Implementations;
+using PizzaGameService.Data.PlayerToken.Interfaces;
 
 namespace PizzaGameService.Data.Extensions;
 
@@ -12,8 +14,10 @@ public static class ServiceCollectionExtension
     {
         return serviceCollection
             .AddSingleton<RegisteredPlayerMapper>()
+            .AddSingleton<PlayerWithRefreshTokenMapper>()
             .AddSingleton<IPlayerRepository, PlayerRepository>()
             .AddSingleton<IPlayerActiveRepository, PlayerActiveRepository>()
-            .AddSingleton<IPlayersRatingRepository, PlayersRatingRepository>();
+            .AddSingleton<IPlayersRatingRepository, PlayersRatingRepository>()
+            .AddSingleton<IPlayerTokenRepository, PlayerTokenRepository>();
     }
 }

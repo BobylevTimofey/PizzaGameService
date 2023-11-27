@@ -12,12 +12,12 @@ public class PlayerRepository : IPlayerRepository
 {
     private readonly string _connectionString;
 
-    public PlayerRepository(IOptions<ConnectionStringSettings> connectionString)
+    public PlayerRepository(IOptions<AppSettings> settings)
     {
-        _connectionString = connectionString.Value.PostgreSql;
+        _connectionString = settings.Value.ConnectionString;
     }
 
-    public async Task<int> SetPlayer(PlayerSetParameters player)
+    public async Task SetPlayer(PlayerSetParameters player)
     {
         using IDbConnection connection = new NpgsqlConnection(_connectionString);
 
@@ -27,11 +27,9 @@ public class PlayerRepository : IPlayerRepository
 
         var sqlCommand =
             "INSERT INTO players (login, password, email, is_playing, age, gender, rating) " +
-            $"VALUES (@Login, @Password, @Email, {defaultIsPlaying}, @Age, @Gender, {baseRating}) RETURNING id";
+            $"VALUES (@Login, @Password, @Email, {defaultIsPlaying}, @Age, @Gender, {baseRating})";
 
-        var idPlayers = await connection.QueryAsync<int>(sqlCommand, player);
-
-        return idPlayers.FirstOrDefault();
+         await connection.QueryAsync(sqlCommand, player);
     }
 
     public async Task<IReadOnlyList<RegisteredPlayer>> GetAllPlayers()

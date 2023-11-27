@@ -12,9 +12,9 @@ public class PlayersRatingRepository : IPlayersRatingRepository
 {
     private readonly string _connectionString;
 
-    public PlayersRatingRepository(IOptions<ConnectionStringSettings> connectionString)
+    public PlayersRatingRepository(IOptions<AppSettings> settings)
     {
-        _connectionString = connectionString.Value.PostgreSql;
+        _connectionString = settings.Value.ConnectionString;
     }
 
     public async Task<IReadOnlyList<PlayerLeaderboardResponse>> GetTopPlayers(int countPlayers)

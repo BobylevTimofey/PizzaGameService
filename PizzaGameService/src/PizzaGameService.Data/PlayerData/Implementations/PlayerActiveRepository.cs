@@ -6,11 +6,11 @@ namespace PizzaGameService.Data.PlayerData.Implementations;
 
 public class PlayerActiveRepository : IPlayerActiveRepository
 {
-    private readonly IOptions<ConnectionStringSettings> _connectionString;
+    private readonly IOptions<AppSettings> _connectionString;
 
-    public PlayerActiveRepository(IOptions<ConnectionStringSettings> connectionString)
+    public PlayerActiveRepository(IOptions<AppSettings> settings)
     {
-        _connectionString = connectionString;
+        _connectionString = settings;
     }
 
     public Task SetPlayerActive(int id)
