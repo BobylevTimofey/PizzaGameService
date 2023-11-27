@@ -24,7 +24,7 @@ public class RatingsService : IRatingsService
     public async Task<PlayerLeaderboardResponse> GetPlayerRating(int idPlayer)
     {
         var playerPlaceInTop = await _ratingRepository.GetPlayerPlaceInTop(idPlayer) ??
-                               throw new PlayerNotFoundException(idPlayer);
+                               throw new PlayerNotFoundException(idPlayer.ToString());
 
         return playerPlaceInTop;
     }

@@ -43,7 +43,7 @@ public class PlayerAuthorizationService : IPlayerAuthorizationService
         return playerId;
     }
 
-    public async Task<int> SignUp(PlayerRegistrationRequest player)
+    public async Task SignUp(PlayerRegistrationRequest player)
     {
         var players = await _playerRepository.GetAllPlayers();
 
@@ -64,8 +64,6 @@ public class PlayerAuthorizationService : IPlayerAuthorizationService
             Gender = player.Gender,
             Age = player.Age
         };
-        var idPlayer = await _playerRepository.SetPlayer(newPlayer);
-
-        return idPlayer;
+        await _playerRepository.SetPlayer(newPlayer);
     }
 }

@@ -8,7 +8,7 @@ public class PlayerRepositoryMock : IPlayerRepository, IPlayerActiveRepository
     private List<(int, PlayerSetParameters, bool)> _data = new();
     private int _id;
 
-    public Task<int> SetPlayer(PlayerSetParameters playerSetParameters)
+    public Task SetPlayer(PlayerSetParameters playerSetParameters)
     {
         var newId = _id++;
         var newPlayer = (newId, playerSetParameters, false);

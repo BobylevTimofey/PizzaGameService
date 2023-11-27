@@ -2,12 +2,12 @@
 
 public class PlayerNotFoundException : Exception
 {
-    public PlayerNotFoundException(int idPlayer, Exception? exception = null) : base(BuildMessage(idPlayer), exception)
+    public PlayerNotFoundException(string identification, Exception? exception = null) : base(BuildMessage(identification), exception)
     {
     }
 
-    private static string BuildMessage(int idPlayer)
+    private static string BuildMessage(string identification)
     {
-        return $"Player with id:{idPlayer} not found";
+        return $"Player with identification:{identification} not found";
     }
 }

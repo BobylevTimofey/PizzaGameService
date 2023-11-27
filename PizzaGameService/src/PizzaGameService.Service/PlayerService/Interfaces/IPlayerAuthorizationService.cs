@@ -8,5 +8,5 @@ public interface IPlayerAuthorizationService
 {
     Task<int> SingIn(PlayerAuthorizationRequest player);
 
-    Task<int> SignUp(PlayerRegistrationRequest player);
+    Task SignUp(PlayerRegistrationRequest player);
 }
