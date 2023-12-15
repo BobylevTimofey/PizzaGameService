@@ -1,5 +1,5 @@
-﻿using PizzaGameService.Data.PlayerData.Interfaces;
-using PizzaGameService.Data.PlayerData.Models;
+﻿using PizzaGameService.Data.Player.Interfaces;
+using PizzaGameService.Data.Player.Models;
 
 namespace PizzaGameService.Tests.PlayerService.Mock;
 

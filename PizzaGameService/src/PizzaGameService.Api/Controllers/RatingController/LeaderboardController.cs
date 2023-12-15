@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using PizzaGameService.Data.PlayersRating.Models;
 using PizzaGameService.Service.Exceptions;
 using PizzaGameService.Service.RatingService.Interfaces;
+using PizzaGameService.Service.TokensService.Utilities;
 
 namespace PizzaGameService.Api.Controllers.RatingController;
 
@@ -21,7 +22,7 @@ public class LeaderboardController : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<IReadOnlyList<PlayerLeaderboardResponse>>> GetLeaderboard(
-        [FromQuery] int countPlayers)
+        [FromQuery] int countPlayers = 10)
     {
         var leaderboard = await _ratingsService.GetLeaderboard(countPlayers);
 
@@ -33,17 +34,20 @@ public class LeaderboardController : ControllerBase
     [Authorize]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<ActionResult<PlayerLeaderboardResponse>> GetPlayerRating()
     {
         try
         {
-            var idPlayer = int.Parse(HttpContext.User.Claims
-                .FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier)
-                ?.Value ?? throw new InvalidOperationException());
-            
+            var idPlayer = TokenUtility.GetIdPlayer(HttpContext.User);
+
             var playerRating = await _ratingsService.GetPlayerRating(idPlayer);
 
             return Ok(playerRating);
+        }
+        catch (PlayerNotVerifyException exception)
+        {
+            return Unauthorized(exception.Message);
         }
         catch (PlayerNotFoundException exception)
         {

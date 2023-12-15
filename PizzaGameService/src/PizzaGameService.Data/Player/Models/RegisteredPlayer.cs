@@ -1,4 +1,4 @@
-﻿namespace PizzaGameService.Data.PlayerData.Models;
+﻿namespace PizzaGameService.Data.Player.Models;
 
 public class RegisteredPlayer
 {

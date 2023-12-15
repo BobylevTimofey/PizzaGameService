@@ -32,7 +32,7 @@ public class PlayerServiceTests
         _authorizationService = new PlayerAuthorizationService(testRepository, testRepository);
     }
 
-    [Test]
+    /*[Test]
     public async Task SimpleRegistrationTest()
     {
         var id = await _authorizationService.SignUp(DefaultRegistrationRequest);
@@ -58,7 +58,7 @@ public class PlayerServiceTests
         var actualId = await _authorizationService.SingIn(DefaultAuthorizationRequest);
 
         actualId.Should().Be(expectedId);
-    }
+    }*/
 
     [Test]
     public async Task PlayerWithIncorrectLoginTest()

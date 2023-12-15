@@ -1,5 +1,5 @@
 ﻿using System.Text.Json.Serialization;
-using PizzaGameService.Data.PlayerData.Models;
+using PizzaGameService.Data.Player.Models;
 
 namespace PizzaGameService.Service.PlayerService.Requests;
 

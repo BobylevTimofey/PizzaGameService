@@ -2,11 +2,11 @@
 using Dapper;
 using Microsoft.Extensions.Options;
 using Npgsql;
-using PizzaGameService.Data.PlayerData.Interfaces;
-using PizzaGameService.Data.PlayerData.Models;
+using PizzaGameService.Data.Player.Interfaces;
+using PizzaGameService.Data.Player.Models;
 using PizzaGameService.Data.Settings;
 
-namespace PizzaGameService.Data.PlayerData.Implementations;
+namespace PizzaGameService.Data.Player.Implementations;
 
 public class PlayerRepository : IPlayerRepository
 {
@@ -17,7 +17,7 @@ public class PlayerRepository : IPlayerRepository
         _connectionString = settings.Value.ConnectionString;
     }
 
-    public async Task SetPlayer(PlayerSetParameters player)
+    public async Task<int> SetPlayer(PlayerSetParameters player)
     {
         using IDbConnection connection = new NpgsqlConnection(_connectionString);
 
@@ -27,9 +27,21 @@ public class PlayerRepository : IPlayerRepository
 
         var sqlCommand =
             "INSERT INTO players (login, password, email, is_playing, age, gender, rating) " +
-            $"VALUES (@Login, @Password, @Email, {defaultIsPlaying}, @Age, @Gender, {baseRating})";
+            $"VALUES (@Login, @Password, @Email, {defaultIsPlaying}, @Age, @Gender, {baseRating}) RETURNING id";
 
-         await connection.QueryAsync(sqlCommand, player);
+        var idPlayers = await connection.QueryAsync<int>(sqlCommand, player);
+
+        return idPlayers.FirstOrDefault();
+    }
+
+    public async Task UpdatePlayerRating(int idPlayer, int rating)
+    {
+        using IDbConnection connection = new NpgsqlConnection(_connectionString);
+
+        var sqlCommand =
+            $"UPDATE players SET rating = {rating} WHERE id = {idPlayer}";
+
+        await connection.QueryAsync(sqlCommand);
     }
 
     public async Task<IReadOnlyList<RegisteredPlayer>> GetAllPlayers()

@@ -1,5 +1,5 @@
 ﻿using Dapper.FluentMap.Mapping;
-using PizzaGameService.Data.PlayerData.Models;
+using PizzaGameService.Data.Player.Models;
 
 namespace PizzaGameService.Data.Mappers;
 
