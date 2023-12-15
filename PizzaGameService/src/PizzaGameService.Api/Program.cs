@@ -44,6 +44,7 @@ FluentMapper.Initialize(config =>
 {
     config.AddMap(app.Services.GetRequiredService<RegisteredPlayerMapper>());
     config.AddMap(app.Services.GetRequiredService<PlayerWithRefreshTokenMapper>());
+    config.AddMap(app.Services.GetRequiredService<PlayerGameDataMapper>());
 });
 
 app.UseHttpsRedirection();

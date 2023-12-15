@@ -1,5 +1,6 @@
-﻿using PizzaGameService.Data.PlayerData.Interfaces;
-using PizzaGameService.Data.PlayerData.Models;
+﻿using PizzaGameService.Data.Player.Interfaces;
+using PizzaGameService.Data.Player.Models;
+using PizzaGameService.Data.PlayerData.Interfaces;
 using PizzaGameService.Service.Exceptions;
 using PizzaGameService.Service.PlayerService.Interfaces;
 using PizzaGameService.Service.PlayerService.Requests;
@@ -10,12 +11,14 @@ public class PlayerAuthorizationService : IPlayerAuthorizationService
 {
     private readonly IPlayerRepository _playerRepository;
     private readonly IPlayerActiveRepository _playerActiveRepository;
+    private readonly IPlayerDataRepository _playerDataRepository;
 
     public PlayerAuthorizationService(IPlayerRepository playerRepository,
-        IPlayerActiveRepository playerActiveRepository)
+        IPlayerActiveRepository playerActiveRepository, IPlayerDataRepository playerDataRepository)
     {
         _playerRepository = playerRepository;
         _playerActiveRepository = playerActiveRepository;
+        _playerDataRepository = playerDataRepository;
     }
 
     public async Task<int> SingIn(PlayerAuthorizationRequest player)
@@ -64,6 +67,9 @@ public class PlayerAuthorizationService : IPlayerAuthorizationService
             Gender = player.Gender,
             Age = player.Age
         };
-        await _playerRepository.SetPlayer(newPlayer);
+        
+        var playerId = await _playerRepository.SetPlayer(newPlayer);
+
+        await _playerDataRepository.SetPlayerData(playerId);
     }
 }

@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Options;
-using PizzaGameService.Data.PlayerData.Interfaces;
+using PizzaGameService.Data.Player.Interfaces;
 using PizzaGameService.Data.Settings;
 
-namespace PizzaGameService.Data.PlayerData.Implementations;
+namespace PizzaGameService.Data.Player.Implementations;
 
 public class PlayerActiveRepository : IPlayerActiveRepository
 {

@@ -2,7 +2,7 @@
 
 namespace PizzaGameService.Api.Controllers;
 
-[Route("api")]
+[Route("api/v1")]
 [ApiController]
 public class PingController : ControllerBase
 {

@@ -1,4 +1,4 @@
-﻿namespace PizzaGameService.Data.PlayerData.Interfaces;
+﻿namespace PizzaGameService.Data.Player.Interfaces;
 
 public interface IPlayerActiveRepository
 {
