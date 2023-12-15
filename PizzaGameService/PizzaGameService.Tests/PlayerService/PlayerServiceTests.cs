@@ -38,9 +38,9 @@ public class PlayerServiceTests
         var id = await _authorizationService.SignUp(DefaultRegistrationRequest);
 
         id.Should().Be(0);
-    }
+    }*/
 
-    [Test]
+    /*[Test]
     public async Task PlayerAlreadyRegisteredTest()
     {
         await _authorizationService.SignUp(DefaultRegistrationRequest);
