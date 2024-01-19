@@ -34,14 +34,7 @@ public class PlayerAuthorizationService : IPlayerAuthorizationService
             throw new PlayerNotVerifyException("Incorrect login or password");
         }
 
-        if (registeredPlayer.IsPlaying)
-        {
-            throw new PlayerAlreadyPlayingException("Player already playing");
-        }
-
         var playerId = registeredPlayer.Id;
-
-        /*await _playerActiveRepository.SetPlayerActive(playerId);*/
 
         return playerId;
     }

@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.Options;
+﻿using System.Data;
+using Dapper;
+using Microsoft.Extensions.Options;
+using Npgsql;
 using PizzaGameService.Data.Player.Interfaces;
 using PizzaGameService.Data.Settings;
 
@@ -6,20 +9,28 @@ namespace PizzaGameService.Data.Player.Implementations;
 
 public class PlayerActiveRepository : IPlayerActiveRepository
 {
-    private readonly IOptions<AppSettings> _connectionString;
+    private readonly string _connectionString;
 
     public PlayerActiveRepository(IOptions<AppSettings> settings)
     {
-        _connectionString = settings;
+        _connectionString = settings.Value.ConnectionString;
     }
 
-    public Task SetPlayerActive(int id)
+    public async Task SetPlayerActive(int idPlayer, bool isActive)
     {
-        throw new NotImplementedException();
+        using IDbConnection connection = new NpgsqlConnection(_connectionString);
+
+        var sqlCommand = $"UPDATE players SET is_playing = {isActive} WHERE id = {idPlayer}";
+
+        await connection.ExecuteAsync(sqlCommand);
     }
 
-    public Task SetPlayerInactive(int id)
+    public async Task<bool> GetPlayerActive(int idPlayer)
     {
-        throw new NotImplementedException();
+        using IDbConnection connection = new NpgsqlConnection(_connectionString);
+
+        var sqlCommand = $"SELECT is_playing FROM players WHERE id = {idPlayer}";
+
+        return await connection.QuerySingleAsync<bool>(sqlCommand);
     }
 }

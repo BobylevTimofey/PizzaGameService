@@ -2,7 +2,7 @@
 
 public interface IPlayerActiveRepository
 {
-    Task SetPlayerActive(int id);
+    public Task SetPlayerActive(int idPlayer, bool isActive);
     
-    Task SetPlayerInactive(int id);
+    public Task<bool> GetPlayerActive(int idPlayer);
 }
