@@ -21,7 +21,7 @@ public class PlayerRepository : IPlayerRepository
     {
         using IDbConnection connection = new NpgsqlConnection(_connectionString);
 
-        const int baseRating = 0;
+        const int baseRating = 100;
 
         const bool defaultIsPlaying = false;
 
@@ -34,7 +34,7 @@ public class PlayerRepository : IPlayerRepository
         return idPlayers.FirstOrDefault();
     }
 
-    public async Task UpdatePlayerRating(int idPlayer, int rating)
+    public async Task UpdatePlayerBestRating(int idPlayer, int rating)
     {
         using IDbConnection connection = new NpgsqlConnection(_connectionString);
 

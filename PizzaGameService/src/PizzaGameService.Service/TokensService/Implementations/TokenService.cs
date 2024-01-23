@@ -54,16 +54,8 @@ public class TokenService : ITokenService
         return refreshToken;
     }
 
-    public async Task SetRefreshToken(HttpResponse response, RefreshToken token, int playerId)
+    public async Task SetRefreshToken(RefreshToken token, int playerId)
     {
-        var cookieOptions = new CookieOptions
-        {
-            HttpOnly = true,
-            Expires = token.TimeExpires
-        };
-
-        response.Cookies.Append("refreshToken", token.Token, cookieOptions);
-
         var playerWithRefreshToken = new PlayerWithRefreshToken
         {
             Id = playerId,

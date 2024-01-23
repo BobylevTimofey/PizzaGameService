@@ -10,7 +10,7 @@ public interface ITokenService
     
     RefreshToken CreateRefreshToken();
 
-    Task SetRefreshToken(HttpResponse response, RefreshToken token, int playerId);
+    Task SetRefreshToken(RefreshToken token, int playerId);
 
     Task<PlayerWithRefreshToken> GetPlayerWithToken(string token);
 }

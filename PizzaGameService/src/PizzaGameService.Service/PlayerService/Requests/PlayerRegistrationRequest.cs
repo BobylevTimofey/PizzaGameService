@@ -14,7 +14,7 @@ public record PlayerRegistrationRequest
     public string Login { get; init; }
 
     [JsonPropertyName("password")] 
-    [MinLength(7, ErrorMessage = "Пароль должен быть длиной более чем 7 символа")]
+    [MinLength(7, ErrorMessage = "Пароль должен быть длиной более чем 7 символов")]
     [MaxLength(20, ErrorMessage = "Пароль должен быть длиной менее чем 20 символов")]
     [Required(ErrorMessage = "Пароль - это обязательное поле")]
     [RegularExpression(@"^(?=.*\w)(?=.*\d).+$", ErrorMessage = "Пароль должен содержать минимум одну цифру и символ")]
