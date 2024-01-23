@@ -6,7 +6,7 @@ public interface IPlayerRepository
 {
     Task<int> SetPlayer(PlayerSetParameters player);
 
-    Task UpdatePlayerRating(int idPlayer, int rating);
+    Task UpdatePlayerBestRating(int idPlayer, int rating);
     
     Task<IReadOnlyList<RegisteredPlayer>> GetAllPlayers();
 }

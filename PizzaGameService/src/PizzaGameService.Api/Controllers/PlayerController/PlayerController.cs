@@ -1,8 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using PizzaGameService.Data.Player.Interfaces;
+using PizzaGameService.Data.PlayerToken.Models;
 using PizzaGameService.Service.Exceptions;
 using PizzaGameService.Service.PlayerService.Interfaces;
 using PizzaGameService.Service.PlayerService.Requests;
 using PizzaGameService.Service.TokensService.Interfaces;
+using PizzaGameService.Service.TokensService.Utilities;
 
 namespace PizzaGameService.Api.Controllers.PlayerController;
 
@@ -12,11 +16,14 @@ public class PlayerController : ControllerBase
 {
     private readonly IPlayerAuthorizationService _authorizationService;
     private readonly ITokenService _tokenService;
+    private readonly IPlayerPlayingService _playerPlayingService;
+    
 
-    public PlayerController(IPlayerAuthorizationService authorizationService, ITokenService tokenService)
+    public PlayerController(IPlayerAuthorizationService authorizationService, ITokenService tokenService, IPlayerActiveRepository playerActiveRepository, IPlayerPlayingService playerPlayingService)
     {
         _authorizationService = authorizationService;
         _tokenService = tokenService;
+        _playerPlayingService = playerPlayingService;
     }
 
     [HttpPost]
@@ -41,8 +48,7 @@ public class PlayerController : ControllerBase
     [Route("authorization")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(StatusCodes.Status409Conflict)]
-    public async Task<ActionResult<string>> AuthorizePlayer(PlayerAuthorizationRequest request)
+    public async Task<ActionResult<Tokens>> AuthorizePlayer(PlayerAuthorizationRequest request)
     {
         try
         {
@@ -50,38 +56,35 @@ public class PlayerController : ControllerBase
             var token = _tokenService.CreateJwt(playerId);
 
             var refreshToken = _tokenService.CreateRefreshToken();
-            await _tokenService.SetRefreshToken(Response, refreshToken, playerId);
+            await _tokenService.SetRefreshToken(refreshToken, playerId);
 
-            return Ok(token);
+            var tokens = new Tokens
+            {
+                Token = token,
+                RefreshToken = refreshToken.Token
+            };
+
+            return Ok(tokens);
         }
         catch (PlayerNotVerifyException exception)
         {
             return Unauthorized(exception.Message);
         }
-        catch (PlayerAlreadyPlayingException exception)
-        {
-            return Conflict(exception.Message);
-        }
     }
 
-    [HttpPost]
+    [HttpGet]
     [Route("authorization/refresh_token")]
-    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    public async Task<ActionResult<string>> RefreshToken()
+    public async Task<ActionResult<Tokens>> RefreshToken()
     {
-        var refreshToken = Request.Cookies["refreshToken"];
-
-        if (refreshToken is null)
+        var refreshToken = HttpContext.Request.Headers["refreshToken"];
+        
+        if (string.IsNullOrEmpty(refreshToken))
             return Unauthorized();
         try
         {
-            var playerWithRefreshToken = await _tokenService.GetPlayerWithToken(refreshToken);
-
-            if (!playerWithRefreshToken.RefreshToken.Equals(refreshToken))
-            {
-                return Unauthorized("Invalid refresh token");
-            }
+            var playerWithRefreshToken = await _tokenService.GetPlayerWithToken(refreshToken.ToString());
 
             if (playerWithRefreshToken.TimeTokenExpires < DateTime.Now)
             {
@@ -90,13 +93,43 @@ public class PlayerController : ControllerBase
 
             var newToken = _tokenService.CreateJwt(playerWithRefreshToken.Id);
             var newRefreshToken = _tokenService.CreateRefreshToken();
-            await _tokenService.SetRefreshToken(Response, newRefreshToken, playerWithRefreshToken.Id);
+            await _tokenService.SetRefreshToken(newRefreshToken, playerWithRefreshToken.Id);
 
-            return Created(string.Empty, newToken);
+            var tokens = new Tokens
+            {
+                Token = newToken,
+                RefreshToken = newRefreshToken.Token
+            };
+
+            return Ok(tokens);
         }
         catch (Exception exception)
         {
             return Unauthorized(exception);
+        }
+    }
+    
+    [HttpGet]
+    [Route("play")]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    public async Task<ActionResult> SetPlayerActive([FromQuery]bool isPlaying)
+    {
+        try
+        {
+            var idPlayer = TokenUtility.GetIdPlayer(HttpContext.User);
+            await _playerPlayingService.SetPlayerActive(idPlayer, isPlaying);
+            return Ok();
+        }
+        catch (PlayerNotVerifyException exception)
+        {
+            return Unauthorized(exception.Message);
+        }
+        catch (PlayerAlreadyPlayingException exception)
+        {
+            return Conflict(exception.Message);
         }
     }
 }

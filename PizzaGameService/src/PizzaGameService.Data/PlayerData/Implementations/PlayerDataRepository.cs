@@ -26,11 +26,11 @@ public class PlayerDataRepository : IPlayerDataRepository
             " seeds_basil_amount, seeds_tomato_amount, seeds_olive_amount, dough_amount, egg_amount, flour_amount," +
             " water_amount, sauce_amount, cheese_amount, sausage_amount, mushrooms_amount, onions_amount," +
             " peppers_amount, basils_amount, tomatoes_amount, anchovies_amount, pineapples_amount, balance," +
-            " garden_level, cafe_level, kitchen_level, days_amount)" +
+            " garden_level, cafe_level, kitchen_level, days_amount, rating)" +
             $"VALUES ({idPlayer}, 0, 0, 0, 0," +
-            "0, 0, 0, 0, 0, 0, 0," +
-            "0, 0, 0, 0, 0, 0, 0," +
-            "0, 0, 0, 0, 0, 0, 0)";
+            "0, 0, 0, 5, 5, 0, 0," +
+            "5, 0, 0, 0, 0, 0, 5," +
+            "0, 0, 1000, 0, 0, 0, 0, 100)";
 
         await connection.QueryAsync(sqlCommand);
     }
@@ -44,7 +44,7 @@ public class PlayerDataRepository : IPlayerDataRepository
             " seeds_basil_amount = @SeedsBasilAmount, seeds_tomato_amount = @SeedsTomatoAmount, seeds_olive_amount = @SeedsOliveAmount, dough_amount = @DoughAmount, egg_amount = @EggAmount, flour_amount = @FlourAmount," +
             " water_amount = @WaterAmount, sauce_amount = @SauceAmount, cheese_amount = @CheeseAmount, sausage_amount = @SausageAmount, mushrooms_amount = @MushroomAmount, onions_amount = @OnionsAmount," +
             " peppers_amount = @PeppersAmount, basils_amount = @BasilsAmount, tomatoes_amount = @TomatoesAmount, anchovies_amount = @AnchoviesAmount, pineapples_amount = @PineapplesAmount, balance = @Balance," +
-            $" garden_level = @GardenLevel, cafe_level = @CafeLevel, kitchen_level = @KitchenLevel, days_amount = @DaysAmount WHERE player_id = {idPlayer}";
+            $" garden_level = @GardenLevel, cafe_level = @CafeLevel, kitchen_level = @KitchenLevel, days_amount = @DaysAmount, rating = @Rating WHERE player_id = {idPlayer}";
 
         await connection.QueryAsync(sqlCommand, playerData);
     }
@@ -54,7 +54,7 @@ public class PlayerDataRepository : IPlayerDataRepository
         using IDbConnection connection = new NpgsqlConnection(_connectionString);
 
         var sqlCommand =
-            "SELECT * FROM players JOIN playersData ON players.id = playersData.player_id WHERE player_id = @idPlayer";
+            "SELECT * FROM playersdata WHERE player_id = @idPlayer";
 
         var players = await connection.QuerySingleAsync<PlayerGameData>(sqlCommand, new { idPlayer });
 

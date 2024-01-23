@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using PizzaGameService.Data.Player.Implementations;
+using PizzaGameService.Data.Player.Interfaces;
 using PizzaGameService.Service.PlayerGameDataService.Implementations;
 using PizzaGameService.Service.PlayerGameDataService.Interfaces;
 using PizzaGameService.Service.PlayerService.Implementations;
@@ -18,6 +20,7 @@ public static class ServiceCollectionExtension
             .AddSingleton<IPlayerAuthorizationService, PlayerAuthorizationService>()
             .AddSingleton<IRatingsService, RatingsService>()
             .AddSingleton<ITokenService, TokenService>()
-            .AddSingleton<IPlayerDataService, PlayerDataService>();
+            .AddSingleton<IPlayerDataService, PlayerDataService>()
+            .AddSingleton<IPlayerPlayingService, PlayerPlayingService>();
     }
 }
